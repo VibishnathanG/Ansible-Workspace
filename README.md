@@ -3,8 +3,7 @@ Automates deployment of simple web application
 
 ## 1. Clone repository
 ```
-  $ git clone https://github.com/amrutja26/simple_web_application.git
-  $ cd simple_web_application
+  $ git clone https://github.com/VibishnathanG/Ansible-Workspace.git
 ```
 
 ## 2. Upgrade zlib version to be compatible with mysql-5.6.42
