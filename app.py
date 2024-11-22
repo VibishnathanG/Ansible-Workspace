@@ -23,11 +23,11 @@ cursor = conn.cursor()
 def main():
     return "Welcome!"
 
-@app.route('/how are you')
+@app.route('/index')
 def hello():
-    return 'I am good, how about you?'
+    return 'You are Succcessfully Redirected to Index Page🤖😊🤖😊!!!!!'
 
-@app.route('/read from database')
+@app.route('/db')
 def read():
     cursor.execute("SELECT * FROM employees")
     row = cursor.fetchone()
