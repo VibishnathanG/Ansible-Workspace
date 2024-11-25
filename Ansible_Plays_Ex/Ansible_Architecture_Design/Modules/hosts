@@ -1,0 +1,17 @@
+[s1]
+rhel
+[s1:vars]
+ansible_user=root
+ansible_host=172.17.0.2
+ansible_ssh_pass=vibishnathan
+
+[s2]
+ubuntu1
+[s2:vars]
+ansible_user=root
+ansible_host=172.17.0.3
+ansible_ssh_pass=vibishnathan
+
+[linux:children]
+s1
+s2
