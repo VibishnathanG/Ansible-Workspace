@@ -1,0 +1,12 @@
+FROM registry.access.redhat.com/ubi8/ubi:8.1
+# Update system and install required packages
+# Set maintainer information (optional)
+LABEL maintainer="vibish@gmail.com"
+RUN yum update -y && \
+    yum install -y iputils bind-utils procps-ng net-tools git wget openssh-server.x86_64 && \
+    yum clean all
+RUN mkdir -p /var/run/sshd
+RUN echo 'root:vibishnathan' |chpasswd
+RUN ssh-keygen -A 
+EXPOSE 22
+CMD [ "/usr/sbin/sshd -D"]
