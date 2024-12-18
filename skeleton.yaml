@@ -32,13 +32,22 @@
       when: not deployment_dir_status.stat.exists
 
   tasks:
-    - name: Install Required Packages
+    - name: Install Required Packages (Debian/Ubuntu)
       apt:
         name: "{{ item }}"
         state: present
         update_cache: yes
       loop: "{{ package_list }}"
       tags: [install, packages]
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Install Required Packages (RHEL/CentOS)
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ package_list }}"
+      tags: [install, packages]
+      when: ansible_facts['os_family'] == "RedHat"
 
     - name: Deploy Configuration File using Jinja Template
       template:
@@ -95,8 +104,5 @@
         daemon_reload: true
 
   roles:
-    - { role: "common", tags: ["common"] }
-    - { role: "monitoring", tags: ["monitor"] }
-
-  tags:
-    - always
+    - common
+    - monitoring
