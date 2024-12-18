@@ -1,8 +1,13 @@
 ---
 # Master Playbook: abstract_skeleton.yml
 - name: "Changing MOTD in RHEL"
-  hosts: rhel
+  hosts: s1
   become: true
+  tasks:
+    - name: "Checking Vars"
+      debug:
+        msg: "{{ a1 }}"
+
   # vars:
   #   motd: "Welcome Vbishnathan MOTD is updated"
   # tasks:
@@ -39,6 +44,4 @@
   #       url: http://{{ ansible_default_ipv4.address }}
   #       status_code:
   #         - 200
-  
-
-
+#
