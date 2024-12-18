@@ -3,10 +3,56 @@
 - name: "Changing MOTD in RHEL"
   hosts: s1
   become: true
-  tasks:
-    - name: "Checking Vars"
-      debug:
-        msg: "{{ a1 }}"
+  
+
+  # tasks:
+  #   - name: "Sleep"
+  #     command: /bin/sleep 10
+  #     async: 20
+  #     poll: 0
+  #     register: output
+    
+  #   - name: "Check User Exixst"
+  #     command: id vibi
+  #     ignore_errors: yes
+  #     register: "user_check"
+    
+  #   - name: "add User"
+  #     shell: useradd vibi
+  #     when: user_check.rc != 0
+
+
+  #   - name: "Check the status"
+  #     async_status:
+  #       jid: "{{ output.ansible_job_id }}"
+  #     register: job_result
+  #     until: job_result.finished
+  #     retries: 5
+
+
+  # tasks:
+  #   - name: "Shell Module"
+  #     shell: echo "vibishnathannnnn" > /txt1.txt
+  #     register: output
+  # post_tasks:
+  #   - debug:
+  #       msg: "{{ output }}"
+
+
+  # tasks:
+  #   - name: "CMD"
+  #     command: userdel vinith
+  #     register: result
+  # post_tasks:
+  #   - debug:
+  #       msg: "return code is: {{ result.rc }} and the entire result found this {{ result }}"
+
+
+
+  # tasks:
+  #   - name: "Checking Vars"
+  #     debug:
+  #       msg: "{{ a1 }}"
 
   # vars:
   #   motd: "Welcome Vbishnathan MOTD is updated"
