@@ -1,0 +1,102 @@
+---
+# Master Playbook: abstract_skeleton.yml
+- name: Sample Ansible Playbook - Full Features
+  hosts: all
+  become: true  # Escalate privileges to root if required
+  vars:
+    # Global Variables
+    app_name: "my_app"
+    app_version: "1.0.0"
+    package_list:
+      - vim
+      - curl
+      - tree
+    config_template: "my_config.j2"
+    deployment_dir: "/opt/{{ app_name }}"
+    user_name: "deployer"
+
+  vars_files:
+    - vars/secrets.yml   # External variables file (e.g., credentials)
+
+  pre_tasks:
+    - name: Check if target directory exists
+      stat:
+        path: "{{ deployment_dir }}"
+      register: deployment_dir_status
+
+    - name: Create deployment directory if not exists
+      file:
+        path: "{{ deployment_dir }}"
+        state: directory
+        mode: '0755'
+      when: not deployment_dir_status.stat.exists
+
+  tasks:
+    - name: Install Required Packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop: "{{ package_list }}"
+      tags: [install, packages]
+
+    - name: Deploy Configuration File using Jinja Template
+      template:
+        src: "templates/{{ config_template }}"
+        dest: "{{ deployment_dir }}/config.yml"
+        mode: '0644'
+      notify:
+        - Restart Application Service
+      tags: [deploy, config]
+
+    - name: Ensure User Exists
+      user:
+        name: "{{ user_name }}"
+        state: present
+      tags: [user, system]
+
+    - name: Deploy Application Code
+      copy:
+        src: "files/app_code/"
+        dest: "{{ deployment_dir }}/"
+        mode: '0755'
+      tags: [deploy, app]
+
+    - name: Verify Application Version
+      shell: "cat {{ deployment_dir }}/VERSION"
+      register: app_version_output
+      changed_when: false
+      tags: [verify]
+
+    - name: Debug Application Version
+      debug:
+        msg: "Deployed application version: {{ app_version_output.stdout }}"
+      tags: [verify]
+
+    - name: Conditional Task - Check App Version
+      debug:
+        msg: "App version matches the required version: {{ app_version }}"
+      when: app_version_output.stdout == app_version
+      tags: [verify]
+
+  post_tasks:
+    - name: Print Playbook Completion Message
+      debug:
+        msg: "Playbook execution completed successfully!"
+
+  handlers:
+    - name: Restart Application Service
+      service:
+        name: "{{ app_name }}"
+        state: restarted
+
+    - name: Reload Systemd
+      systemd:
+        daemon_reload: true
+
+  roles:
+    - { role: "common", tags: ["common"] }
+    - { role: "monitoring", tags: ["monitor"] }
+
+  tags:
+    - always

@@ -1,0 +1,44 @@
+---
+# Master Playbook: abstract_skeleton.yml
+- name: "Changing MOTD in RHEL"
+  hosts: rhel
+  become: true
+  # vars:
+  #   motd: "Welcome Vbishnathan MOTD is updated"
+  # tasks:
+  #   - name: "Task 1 MOTD"
+  #     copy:
+  #       dest: /etc/motd
+  #       content: "{{ motd }}"
+  #     when: ansible_distribution == "RedHat"
+  #     notify: "motd_changed"
+  
+  # handlers:
+  #   - name: "motd_changed"
+  #     debug:
+  #       msg: "MOTD changed "
+
+
+  # vars:
+  # tasks:
+  #   - name: "Installaing Nginx"
+  #     package:
+  #       name: nginx
+  #       state: present
+  #     notify:
+  #       "Nginx Installed"
+
+  #   - name: "Restart Nginx"
+  #     service:
+  #       name: nginx
+  #       state: restarted
+      
+  # handlers:
+  #   - name: "Nginx Installed"
+  #     uri:
+  #       url: http://{{ ansible_default_ipv4.address }}
+  #       status_code:
+  #         - 200
+  
+
+
