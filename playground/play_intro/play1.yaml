@@ -1,10 +1,38 @@
 ---
 # Master Playbook: abstract_skeleton.yml
-- name: "Changing MOTD in RHEL"
+- 
   hosts: s1
   become: true
   
 
+
+
+  # tasks:
+  #   - name: "install git and which packages"
+  #     block:
+  #       - name: "Installing Git"
+  #         package:
+  #           name: git
+  #           state: present
+  #       - name: "Installaing Which"
+  #         package:
+  #           name: which
+  #           state: present
+  #     rescue:
+  #       - name: "Remove packages"
+  #         yum: 
+  #           name: git-core-2.43.5-2.el8_10.x86_64
+  #           state: absent
+  #       - package: 
+  #           name: which 
+  #           state: absent
+  #     always:
+  #       - debug:
+  #           msg: "Block Executed!!!"
+
+
+      
+    
   # tasks:
   #   - name: "Sleep"
   #     command: /bin/sleep 10
@@ -91,3 +119,7 @@
   #       status_code:
   #         - 200
 #
+...
+
+
+
